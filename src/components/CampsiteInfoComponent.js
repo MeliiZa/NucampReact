@@ -1,24 +1,23 @@
 import React from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class CampsiteInfo extends React.Component{
+
     
-    renderCampsite(campsite){
-        return(
-            <div className="col-md-5 m-1">
-                <Card>
-                <CardImg top src={campsite.image} alt={campsite.name} />
-                <CardBody>
-                <CardTitle>{campsite.name}</CardTitle>
-                <CardText>{campsite.description}</CardText>
-                </CardBody>
-                </Card></div>
-        )
+function RenderCampsite({campsite}){
+    return(
+        <div className="col-md-5 m-1">
+            <Card>
+            <CardImg top src={campsite.image} alt={campsite.name} />
+            <CardBody>
+            <CardTitle>{campsite.name}</CardTitle>
+            <CardText>{campsite.description}</CardText>
+            </CardBody>
+            </Card></div>
+    );
+}
 
-    }
 
-
-    renderComments(comments){
+function  RenderComments({comments}){
         if (comments){
          return(<div className="col-md-5 m-1"><h4>Comments</h4>
          {comments.map(commentItem => {
@@ -35,29 +34,18 @@ class CampsiteInfo extends React.Component{
 }
 
 
-    render(){
-        let returnData;
-
-    
-        if(this.props.campsite){
-            console.log("I found my campsite info");
-            returnData= (
-                <div className="container">
-            <div className="row">
-                {this.renderCampsite(this.props.campsite)}
-                {this.renderComments(this.props.campsite.comments)}
+function CampsiteInfo(props) {
+    if (props.campsite) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <RenderCampsite campsite={props.campsite} />
+                    <RenderComments comments={props.campsite.comments} />
                 </div>
-                </div>
-            )
-           
-
-        } else{
-                console.log("No campsite info found");
-                returnData= <div><h3>empty</h3></div>;
-                }
-        
-        return returnData;
-     }
+            </div>
+        );
+    }
+    return <div />;
 }
 
-export default CampsiteInfo
+export default CampsiteInfo;
